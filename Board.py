@@ -8,7 +8,8 @@ class Board():
         self.board = [
             ['  ' for _ in range(8)] for _ in range(8)
         ]
-        self.key = [f"{randint(0,64)}"]
+        self.key = f"{randint(0,64)}"
+        self.isPopulated = False
     
     def printBoard(self):
         """
@@ -45,6 +46,7 @@ class Board():
             for c in range(8):
                 self.board[l][c] = 'CA' if randint(0,10)%2 else 'CO'
         
+        self.isPopulated = True
         print('Tabuleiro Preenchido.')
 
     def printPopulatedBoard(self):
@@ -66,5 +68,22 @@ class Board():
         self.board = [
             ['  ' for _ in range(8)] for _ in range(8)
         ]
-        self.key = [f"{randint(0,64)}"]
+        self.key = f"{randint(0,64)}"
+        self.isPopulated = False
         print('Tabuleiro resetado.')
+    
+    def flipCoin(self,coin):
+        """
+        Vira a moeda escolhida.
+        """
+        if self.isPopulated:
+            binary = "{:06b}".format(coin)
+            line = binary[0:3]
+            column = binary[3:]
+            line = sum([2**i*int(line[2-i]) for i in range(3)])
+            column = sum([2**i*int(column[2-i]) for i in range(3)])
+            self.board[line][column] = 'CA' if self.board[line][column] == 'CO' else 'CO'
+            
+            print(f'Moeda de casa {coin} Virada.')
+        else:
+            print('Tabuleiro não foi preenchido.')

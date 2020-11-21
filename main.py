@@ -9,14 +9,14 @@ def solution(board):
     """
     prolog = Prolog()
     prolog.consult('main.pl')
-    board = str(board.board).replace('CA', '1').replace('CO', '0')
+    inputA = str(board.board).replace('\'CA\'', '1').replace('\'CO\'', '0')
 
-    # É preciso enviar o tabuleiro e a posição da chave 
-    # para o main.pl
+    output = list(prolog.query('flatten({},T),get_coin_to_flip(T,{},N)'.format(inputA,board.key)))
+    coin = output[0]['N']
+    board.flipCoin(coin)
+    inputB = str(board.board).replace('\'CA\'', '1').replace('\'CO\'', '0')
+    output2 = list(prolog.query('flatten({},T),solution(T,S)'.format(inputB)))
 
-    # solution = prolog.query("solution({},{})".format(board, ))
-
-    print(list(prolog.query("flatten({})".format(board))))
 
 if __name__ == "__main__":
     board = Board()
