@@ -2,6 +2,7 @@
 :- use_module(library(apply)).
 :- use_module(library(lists)).
 
+% Predicados Auxiliares
 xor(A,A,0).
 xor(A,B,1):-
     A \= B.
@@ -69,29 +70,6 @@ remove_all(_, [], []).
 remove_all(X, [X|T], L):- remove_all(X, T, L), !.
 remove_all(X, [H|T], [H|L]):- remove_all(X, T, L ).
 
-get_group_bin(_,[],[]).
-get_group_bin(N,[B|Bs],[G|Gs]):-
-    ( nth0(N,B,1) -> 
-        append(B,[],G)
-    ;
-        append(['NONE'],[],G)
-    ),
-    get_group_bin(N,Bs,Gs).
-    
-get_members_of_group(N,R):-
-    numlist(0,63,NUMS),
-    convert_num_list(NUMS,BITS),
-    invert_list(BITS,I_BITS),
-    get_group_bin(N,I_BITS,GROUP_W_ERRORS),
-    remove_all(['NONE'],GROUP_W_ERRORS,GROUP),
-    invert_list(GROUP, GROUP_BIN),
-    convert_bin_list(GROUP_BIN,R).
-
-get_members_values([],_,[]).
-get_members_values([MEMBER|MEMBERS],VALUES,[R|Rs]):-
-    nth0(MEMBER,VALUES,R),
-    get_members_values(MEMBERS,VALUES,Rs).
-
 count([],_,0).
 count([X|T],X,Y):- count(T,X,Z), Y is 1+Z.
 count([X1|T],X,Z):- X1\=X,count(T,X,Z).
@@ -101,12 +79,43 @@ countall(List,X,C) :-
     member(X,List1),
     count(List,X,C).
 
+% Predicado para avaliar os índices(em binário) que pertencem a cada grupo de busca.
+get_group_bin(_,[],[]).
+get_group_bin(N,[B|Bs],[G|Gs]):-
+    ( nth0(N,B,1) -> 
+        append(B,[],G)
+    ;
+        append(['NONE'],[],G)
+    ),
+    get_group_bin(N,Bs,Gs).
+
+% Predicado para avaliar os avaliar os índices que pertencem a cada grupo de busca.
+% Utiliza do predicado get_group_bin e converte para decimal.
+get_members_of_group(N,R):-
+    numlist(0,63,NUMS),
+    convert_num_list(NUMS,BITS),
+    invert_list(BITS,I_BITS),
+    get_group_bin(N,I_BITS,GROUP_W_ERRORS),
+    remove_all(['NONE'],GROUP_W_ERRORS,GROUP),
+    invert_list(GROUP, GROUP_BIN),
+    convert_bin_list(GROUP_BIN,R).
+
+% Predicado para pegar os valores dos membros do grupo baseado no índice.
+get_members_values([],_,[]).
+get_members_values([MEMBER|MEMBERS],VALUES,[R|Rs]):-
+    nth0(MEMBER,VALUES,R),
+    get_members_values(MEMBERS,VALUES,Rs).
+
+% Predicado que avalia a paridade de cada grupo. O conceito de paridade é usado em relação
+% ao número de moedas com valor 1(CARA).
 get_group_parity(N,T,P):-
     get_members_of_group(N,MEMBERS),
     get_members_values(MEMBERS,T,VALUES),
     countall(VALUES,1,INSTANCES),
     P is INSTANCES mod 2.
 
+% Predicado que avalia a paridade de todos os grupos.
+% Apenas um auxiliador para reunir os predicados retornados em get_group_parity.
 get_parity_array(T,A):-
     get_group_parity(5,T,A5),
     get_group_parity(4,T,A4),
@@ -117,6 +126,8 @@ get_parity_array(T,A):-
     append([A5,A4,A3,A2,A1,A0],[],A).
     
 
+% Predicado principal.
+% Utilizado pelo prisioneiro para descobrir qual moeda deve virar.
 get_coin_to_flip(T,C,N):-
     get_parity_array(T,ARRAY),
     dec2bin(C,C_BIN),
@@ -125,6 +136,9 @@ get_coin_to_flip(T,C,N):-
     bin2dec(BIN_CHANGE,N),
     write('RESULTADO:'),writeln(N).
 
+% Utilizado pelo segundo prisioneiro para receber encontrar onde está a chave.
+% Esse predicado é chamado após o primeiro prisioneiro ter virado a moeda.
+% Serve mais para ilustrar que a moeda virada era a moeda correta.
 solution(T,S):-
     get_parity_array(T,A),
     bin2dec(A,S),
