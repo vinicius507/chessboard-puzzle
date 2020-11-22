@@ -134,7 +134,7 @@ get_coin_to_flip(T,C,R):-
     fill_array_to_6_bits(C_BIN,C_BIN_6),
     xor_array(ARRAY,C_BIN_6,BIN_CHANGE),
     bin2dec(BIN_CHANGE,R),
-    write('RESULTADO:'),writeln(R).
+    write('PRISIONEIRO 1: Preciso virar a moeda '),writeln(R).
 
 % Utilizado pelo segundo prisioneiro para receber encontrar onde está a chave.
 % Esse predicado é chamado após o primeiro prisioneiro ter virado a moeda.
@@ -142,4 +142,5 @@ get_coin_to_flip(T,C,R):-
 solution(T,S):-
     get_parity_array(T,A),
     bin2dec(A,S),
-    write('A CHAVE ESTÁ NA CASA: '), writeln(S).
+    write('PRISIONEIRO 2: A chave está na casa '), writeln(S).
+    

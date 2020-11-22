@@ -87,3 +87,12 @@ class Board():
             print(f'Moeda de casa {coin} Virada.')
         else:
             print('Tabuleiro não foi preenchido.')
+    
+    def check(self,position):
+        """
+        Checa se a a posição escolhida condiz
+        com a posição da chave.
+        """
+
+        print(f'O Prisioneiro 2 encontrou a chave na casa {self.key}') if int(self.key) == position else print(f'O prisioneiro 2 não encontrou a chave.')
+        

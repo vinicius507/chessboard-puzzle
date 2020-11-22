@@ -9,16 +9,18 @@ def solution(board):
     """
     prolog = Prolog()
     prolog.consult('main.pl')
-    inputA = str(board.board).replace('\'CA\'', '1').replace('\'CO\'', '0')
 
-    output = list(prolog.query('flatten({},T),get_coin_to_flip(T,{},N)'.format(inputA,board.key)))
-    coin = output[0]['N']
-    board.flipCoin(coin)
-    inputB = str(board.board).replace('\'CA\'', '1').replace('\'CO\'', '0')
-    output2 = list(prolog.query('flatten({},T),solution(T,S)'.format(inputB)))
-
+    tabuleiro_prisioneiro_1 = str(board.board).replace('\'CA\'', '1').replace('\'CO\'', '0')
+    output = list(prolog.query('flatten({},T),get_coin_to_flip(T,{},R)'.format(tabuleiro_prisioneiro_1,board.key)))
+    board.flipCoin(output[0]['R'])
+    
+    tabuleiro_prisioneiro_2 = str(board.board).replace('\'CA\'', '1').replace('\'CO\'', '0')
+    output_2 = list(prolog.query('flatten({},T),solution(T,S)'.format(tabuleiro_prisioneiro_2)))
+    board.check(output_2[0]['S'])
 
 if __name__ == "__main__":
     board = Board()
     board.populateBoard()
+    print('------------------------TABULEIRO------------------------')
+    board.printPopulatedBoard()
     solution(board)
