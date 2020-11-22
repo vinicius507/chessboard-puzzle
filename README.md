@@ -3,7 +3,7 @@ Projeto desenvolvido para a disciplina de Lógica Aplicada à Computação da Un
 Todo código em Python foi escrito para fins de demonstração, como o arquivo [Board.py](https://github.com/vinicius507/chessboard-puzzle/blob/main/Board.py). Os predicados utilizados para o projeto se encontram no arquivo [main.pl](https://github.com/vinicius507/chessboard-puzzle/blob/main/main.pl).
 
 ## Requisitos
-É necessário ter o SWI-Prolog instalado para utilizar o pyswip.
+É necessário ter o [SWI-Prolog](https://www.swi-prolog.org/) instalado para utilizar o pyswip.
 
 Para instalar o pyswip:
 ```sh
