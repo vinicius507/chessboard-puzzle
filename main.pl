@@ -133,7 +133,7 @@ get_coin_to_flip(T,C,R):-
     dec2bin(C,C_BIN),
     fill_array_to_6_bits(C_BIN,C_BIN_6),
     xor_array(ARRAY,C_BIN_6,BIN_CHANGE),
-    bin2dec(BIN_CHANGE,N),
+    bin2dec(BIN_CHANGE,R),
     write('RESULTADO:'),writeln(R).
 
 % Utilizado pelo segundo prisioneiro para receber encontrar onde está a chave.
