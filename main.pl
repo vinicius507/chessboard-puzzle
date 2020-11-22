@@ -128,13 +128,13 @@ get_parity_array(T,A):-
 
 % Predicado principal.
 % Utilizado pelo prisioneiro para descobrir qual moeda deve virar.
-get_coin_to_flip(T,C,N):-
+get_coin_to_flip(T,C,R):-
     get_parity_array(T,ARRAY),
     dec2bin(C,C_BIN),
     fill_array_to_6_bits(C_BIN,C_BIN_6),
     xor_array(ARRAY,C_BIN_6,BIN_CHANGE),
     bin2dec(BIN_CHANGE,N),
-    write('RESULTADO:'),writeln(N).
+    write('RESULTADO:'),writeln(R).
 
 % Utilizado pelo segundo prisioneiro para receber encontrar onde está a chave.
 % Esse predicado é chamado após o primeiro prisioneiro ter virado a moeda.
