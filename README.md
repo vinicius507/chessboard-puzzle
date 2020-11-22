@@ -15,4 +15,5 @@ Para executar o código, basta executar o arquivo [main.py](https://github.com/v
 python main.py
 ```
 ## Autores
-[<img src="https://avatars1.githubusercontent.com/u/6608056?s=460&u=31f43743a991fbaaa87c644a6bda5a581b26c5f0&v=4" width="115"><br><sub>Vinícius Gonçalves</sub>](https://github.com/vinicius507) [<img src="https://avatars1.githubusercontent.com/u/28929724?s=460&u=f9947817515367ec018b60bcda6cf976fd3b164a&v=4" width="115"><br><sub>Nícolas Bessa</sub>](https://github.com/Nicolasbessa)
+* [Vinícius Gonçalves](https://github.com/vinicius507)
+* [Nícolas Bessa](https://github.com/Nicolasbessa)
