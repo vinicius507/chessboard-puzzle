@@ -21,6 +21,7 @@ def solution(board):
 if __name__ == "__main__":
     board = Board()
     board.populateBoard()
+    print('A chave está na casa: {}'.format(board.key))
     print('------------------------TABULEIRO------------------------')
     board.printPopulatedBoard()
     solution(board)
